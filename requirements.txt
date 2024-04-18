@@ -1,0 +1,10 @@
+Flask==2.0.1
+pymysql==1.0.2
+werkzeug==0.2.0
+matplotlib==3.8.3
+numpy==1.26.4
+tensorflow==2.16.1
+tensorflow_hub==0.16.1
+python == 3.12.1
+cv2 == 4.9.0
+PIL == 10.2.0

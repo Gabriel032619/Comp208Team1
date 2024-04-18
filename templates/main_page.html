@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>style transfer</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+/*背景色以及长页面*/         
+         body {
+            background-color: #f7f7f7; /* 设置背景色为 #f7f7f7 */
+            min-height: 2800px; /* 设置最小高度为2000px，使页面变长 */
+            margin: 0; /* 移除默认的边距 */
+            padding: 0; /* 移除默认的内边距 */
+            overflow-x: hidden; /* 隐藏超出页面宽度的内容 */
+            
+        }
+/*顶上logo*/
+.logo {
+            display: flex;
+            justify-content: center;
+            padding: 10px 0; /* 根据需要调整上下边距 */
+            width: 1450px; /* 设置logo宽度 */
+        }
+        .logo img {
+            max-width: 75px; /* 调整这里的值来改变 logo 的宽度 */
+            height: auto; /* 保持图片的宽高比 */
+        }
+/*艺术字*/        
+.dashboard-name img {
+            max-width: 500px; /* 根据需要调整宽度 */
+            height: auto; /* 保持图片的宽高比 */
+        }
+        .dashboard-name {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+ /*ST图片旁边的文字*/   
+ h1 {
+            font-size: 40px; /* 标题的字体大小 */
+            color: #333; /* 标题的字体颜色 */
+            position: absolute;
+            top: 450px;
+            left: 60px;
+        }
+
+        p {
+            font-size: 30px; /* 内容的字体大小 */
+            color: #666; /* 内容的字体颜色 */
+            max-width: 80%; /* 控制内容文本的最大宽度 */
+            position: absolute;
+            top: 550px;
+            left: 60px;
+        }    
+/*Style Transfer下的小图片1*/  
+.content-image1 img {
+            max-width: 100px; /* 根据需要调整宽度 */
+            height: auto; /* 保持图片的宽高比 */
+            position: absolute;
+            top: 650px;
+            left: 60px;
+        }
+        .content-image1 {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+/*Style Transfer下的小图片2*/  
+.content-image2 img {
+            max-width: 100px; /* 根据需要调整宽度 */
+            height: auto; /* 保持图片的宽高比 */
+            position: absolute;
+            top: 650px;
+            left: 190px;
+        }
+        .content-image2 {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+/*Style Transfer下的小图片3*/  
+.content-image3 img {
+            max-width: 100px; /* 根据需要调整宽度 */
+            height: auto; /* 保持图片的宽高比 */
+            position: absolute;
+            top: 650px;
+            left: 320px;
+        }
+        .content-image3 {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+/*Style Tranfer图片*/
+.side-image {
+            flex: 1;
+            display: flex;
+            position: absolute;
+            top: 430px;
+            left: 900px;
+    
+        }
+        .side-image img {
+            max-width: 480px; /* 根据需要调整宽度 */
+            height: auto;
+        }
+/*Style Tranfer图片的背景*/        
+.side-image_b {
+            flex: 1;
+            display: flex;
+            position: absolute;
+            top: 100px;
+            left: 800px;
+            z-index: -1; /* 设置为-1确保元素位于最底层 */
+    
+        }
+        .side-image_b img {
+            max-width: 900px; /* 根据需要调整宽度 */
+            height: auto;
+        }
+/*Style Tranfer小图片下的按钮*/   
+#tryItNowButton {
+    padding: 10px 20px; /* 按钮内部的填充空间 */
+    font-size: 16px; /* 文本大小 */
+    color: white; /* 文本颜色 */
+    background-color: #007bff; /* 按钮背景颜色 */
+    border: none; /* 移除边框 */
+    border-radius: 5px; /* 圆角边框 */
+    cursor: pointer; /* 鼠标悬停时的光标形状 */
+    transition: background-color 0.3s; /* 背景颜色变化的过渡效果 */
+    position: absolute;
+    top: 850px;
+    left: 305px;
+}
+
+#tryItNowButton:hover {
+    background-color: #0056b3; /* 鼠标悬停时的背景颜色 */
+}
+/*图片的反馈效果*/
+.content-image1 img, .content-image2 img, .content-image3 img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* 平滑过渡效果 */
+    cursor: pointer; /* 将鼠标指针变为手形，指示可以点击 */
+}
+
+.content-image1 img:hover, .content-image2 img:hover, .content-image3 img:hover {
+    transform: scale(1.05); /* 鼠标悬停时图片放大 */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
+}
+
+.content-image1 img:active, .content-image2 img:active, .content-image3 img:active {
+    transform: scale(0.95); /* 鼠标点击时图片缩小 */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* 点击时的阴影效果 */
+}
+/*Image Enhancement图片*/
+.side-image2 {
+            flex: 1;
+            display: flex;
+            position: absolute;
+            top: 1030px;
+            left: 90px;
+    
+        }
+        .side-image2 img {
+            max-width: 480px; /* 根据需要调整宽度 */
+            height: auto;
+        }
+/*Image Enhancement图片的背景*/        
+.side-image_b2 {
+            flex: 1;
+            display: flex;
+            position: absolute;
+            top: 950px;
+            left: -40px;
+            z-index: -1; /* 设置为-1确保元素位于最底层 */
+    
+        }
+        .side-image_b2 img {
+            max-width: 750px; /* 根据需要调整宽度 */
+            height: auto;
+        }
+/*IE图片旁边的文字*/   
+#additionalText2 h2, #additionalText2 p {
+    position: absolute;
+    left: 850px;
+    color: #333;
+}
+
+#additionalText2 h2 {
+    top: 1100px;
+    font-size: 35px;
+}
+
+#additionalText2 p {
+    top: 1200px;
+    font-size: 25px;
+    max-width: 70%;
+    color: #666;
+}
+/*IE图下的按钮*/  
+#tryItNowButton2 {
+    padding: 10px 20px; /* 按钮内部的填充空间 */
+    font-size: 16px; /* 文本大小 */
+    color: white; /* 文本颜色 */
+    background-color: #007bff; /* 按钮背景颜色 */
+    border: none; /* 移除边框 */
+    border-radius: 5px; /* 圆角边框 */
+    cursor: pointer; /* 鼠标悬停时的光标形状 */
+    transition: background-color 0.3s; /* 背景颜色变化的过渡效果 */
+    position: absolute;
+    top: 1450px;
+    left: 1200px;
+}
+
+#tryItNowButton2:hover {
+    background-color: #0056b3; /* 鼠标悬停时的背景颜色 */
+}
+/*图像增强点击的效果*/
+.side-image2 img {
+    transition: transform 0.2s ease; /* 平滑变换效果 */
+    cursor: pointer; /* 显示可点击的手形光标 */
+}
+
+.side-image2 img:active {
+    transform: scale(0.98); /* 点击时轻微缩小图片 */
+}
+/*自动标签的图片*/
+.side-image3 {
+            flex: 1;
+            display: flex;
+            position: absolute;
+            top: 1630px;
+            left: 900px;
+    
+        }
+        .side-image3 img {
+            max-width: 480px; /* 根据需要调整宽度 */
+            height: auto;
+        }
+/*AIT图片的背景*/        
+.side-image3_b {
+            flex: 1;
+            display: flex;
+            position: absolute;
+            top: 1450px;
+            left: 800px;
+            z-index: -1; /* 设置为-1确保元素位于最底层 */
+    
+        }
+        .side-image3_b img {
+            max-width: 900px; /* 根据需要调整宽度 */
+            height: auto;
+        }
+/*AIT图片旁边的文字*/   
+#additionalText3 h2, #additionalText3 p {
+    position: absolute;
+    left: 60px;
+    color: #333;
+}
+
+#additionalText3 h2 {
+    top: 1750px;
+    font-size: 35px;
+}
+
+#additionalText3 p {
+    top: 1850px;
+    font-size: 25px;
+    max-width: 70%;
+    color: #666;
+}
+/*AIT图下的按钮*/  
+#tryItNowButton3 {
+    padding: 10px 20px; /* 按钮内部的填充空间 */
+    font-size: 16px; /* 文本大小 */
+    color: white; /* 文本颜色 */
+    background-color: #007bff; /* 按钮背景颜色 */
+    border: none; /* 移除边框 */
+    border-radius: 5px; /* 圆角边框 */
+    cursor: pointer; /* 鼠标悬停时的光标形状 */
+    transition: background-color 0.3s; /* 背景颜色变化的过渡效果 */
+    position: absolute;
+    top: 2050px;
+    left: 305px;
+}
+
+#tryItNowButton3:hover {
+    background-color: #0056b3; /* 鼠标悬停时的背景颜色 */
+}
+/*FAQ*/
+#additionalText5 h2, #additionalText5 p {
+    position: absolute;
+    left: 500px;
+    color: #333;
+}
+#additionalText5 h2 {
+    top: 1700px;
+    font-size: 45px;
+}
+.faq-section {
+    background-color: white; /* 设置白色背景 */
+    padding: 20px; /* 内边距 */
+    margin-top: 20px; /* 与页面其他部分的间距 */
+    position: absolute;
+    top: 1900px; /* 距离顶部200px */
+    left: 50px; /* 距离左侧50px */
+    width: 80%;
+    background-color: white;
+    padding: 20px;
+}
+
+.faq h3 {
+    color: #333; /* 问题的颜色 */
+    font-size: 30px; /* 问题的字体大小 */
+}
+
+.faq p  {
+    color: #666; /* 答案的颜色 */
+    font-size: 20px; /* 答案的字体大小 */
+    top: 0px; /* 距离顶部200px */
+    left: 850px; /* 距离左侧50px */
+
+}
+.faq-question {
+    background-color: #f7f7f7; /* 设置按钮背景颜色 */
+    color: black; /* 设置按钮文字颜色 */
+    padding: 10px 20px; /* 设置内边距：上下10px、左右20px */
+    border: none; /* 移除边框 */
+    border-radius: 5px; /* 设置边框圆角 */
+    cursor: pointer; /* 将鼠标悬停时的光标改为指针 */
+    font-size: 24px; /* 设置字体大小 */
+    transition: background-color 0.3s; /* 背景颜色变化的过渡效果 */
+    margin-bottom: 40px;
+}
+
+.faq-question:hover {
+    background-color: white; /* 鼠标悬停时的背景颜色 */
+}
+
+
+    </style>
+</head>
+<body>
+<!--顶上logo-->    
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo1.png') }}" alt="Logo">
+    </div>
+<!--艺术字-->      
+    <div class="dashboard-name">
+        <img src="{{ url_for('static', filename='dashboard_name.png') }}" alt="Dashboard Name">
+    </div>
+<!--图片旁的文字-->    
+<div class="text-content">
+    <h1>Style Transfer</h1>
+    <p>Pick a style you want for your picture</p>
+</div>
+<!--Style Tranfer图片-->
+<div class="side-image">
+    <img id="mainImage" src="{{ url_for('static', filename='Style_T.jpg') }}" alt="Side Image">
+</div>
+<div class="side-image_b">
+    <img src="{{ url_for('static', filename='ST_background.png') }}" alt="Side Image">
+</div>
+<!--Style Transfer下的小图片-->
+<!--<div class="content-image1" onclick="changeImage( url_for('static', filename='S1.1st.jpg'))">-->
+<!--    <img src="url_for('static', filename='S1.1.png')" alt="Content Image1">-->
+<!--</div>-->
+<!--<div class="content-image2" onclick="changeImage(url_for('static', filename='S1.2st.jpg'))">-->
+<!--    <img src="url_for('static', filename='S1.2.png')" alt="Content Image2">-->
+<!--</div>-->
+<!--<div class="content-image3" onclick="changeImage(url_for('static', filename='S1.3st.jpg'))">-->
+<!--    <img src="url_for('static', filename='S1.3.png')" alt="Content Image3">-->
+<!--</div>-->
+<div class="content-image1" onclick="changeImage('{{ url_for('static', filename='S1.1st.jpg') }}')">
+    <img src="{{ url_for('static', filename='S1.1.png') }}" alt="Content Image1">
+</div>
+<div class="content-image2" onclick="changeImage('{{ url_for('static', filename='S1.2st.jpg') }}')">
+    <img src="{{ url_for('static', filename='S1.2.png') }}" alt="Content Image2">
+</div>
+<div class="content-image3" onclick="changeImage('{{ url_for('static', filename='S1.3st.jpg') }}')">
+    <img src="{{ url_for('static', filename='S1.3.png') }}" alt="Content Image3">
+</div>
+<!--Style Transfer下的按钮-->
+<a href="/login/main_page/transfer">
+    <button id="tryItNowButton">Try it now!</button>
+</a>
+<!--Image Enhancement图片-->
+<div class="side-image2" onclick="changeImage1()">
+    <img id="mainImage2" src="{{ url_for('static', filename='Image_enhancement_before.jpg') }}" alt="Side Image">
+</div>
+<div class="side-image_b2">
+    <img src="{{ url_for('static', filename='IE_background.jpg') }}" alt="Side Image">
+</div>
+<div id="additionalText2">
+    <h2>Image Enhancement</h2>
+    <p>improve the visual appearance of an image</p>
+</div>
+<!--IE图下的按钮-->
+<a href="/login/main_page/strength">
+    <button id="tryItNowButton2">Try it now!</button>
+</a>
+
+{#<!--AIT图片-->#}
+{#<div class="side-image3">#}
+{#    <img id="mainImage" src="img/AIT.jpg" alt="Side Image">#}
+{#</div>#}
+{#<div class="side-image3_b">#}
+{#    <img src="img/AIT_background.png" alt="Side Image">#}
+{#</div>#}
+{#<div id="additionalText3">#}
+{#    <h2>Auto Image Tagging</h2>#}
+{#    <p>Expanding the capabilities of automatic image recognition</p>#}
+{#</div>#}
+{#<!--AIT图下的按钮-->#}
+{#<<button id="tryItNowButton3">Try it now!</button>#}
+{#<!--FAQ-->#}
+<div id="additionalText5">
+    <h2>Frequently Asked Questions</h2>
+</div>
+<div class="faq-section">
+    <div class="faq">
+        <button class="faq-question">Can I use it for free?</button>
+        <div class="faq-answer" style="display: none;">
+            <p>Yes, you can use our service for free. We offer a basic version that allows you to enjoy core functionalities without any cost. This means you can access our fundamental service range unlimitedly without encountering any hidden fees or compulsory upgrades. Our goal is to provide a convenient and user-friendly service, ensuring that everyone can enjoy our product without any barriers.</p>
+        </div>
+    </div>
+    <div class="faq">
+        <button class="faq-question">What are the current limitations of Style Transfer?</button>
+        <div class="faq-answer" style="display: none;">
+            <p>You will likely find bugs and some issues, but we are improving the system every week. Your feedback can help us improve it.</p>
+        </div>
+    </div>
+    <div class="faq">
+        <button class="faq-question">I have more questions.Who can I talk to?</button>
+        <div class="faq-answer" style="display: none;">
+            <p>Reach out to us at sgwxu18@liverpool.ac.uk.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function changeImage(newImageSrc) {
+        var mainImage = document.getElementById('mainImage');
+        mainImage.src = newImageSrc;
+    }
+    function changeImage1() {
+        var image = document.getElementById('mainImage2');
+        image.src = "{{ url_for('static', filename='Image_enhancement_after.jpg') }}";
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        var faqs = document.getElementsByClassName("faq-question");
+        for (var i = 0; i < faqs.length; i++) {
+            faqs[i].addEventListener("click", function() {
+                var answer = this.nextElementSibling;
+                if (answer.style.display === "block") {
+                    answer.style.display = "none";
+                } else {
+                // 先关闭所有打开的答案
+                    var allAnswers = document.getElementsByClassName("faq-answer");
+                    for (var j = 0; j < allAnswers.length; j++) {
+                        allAnswers[j].style.display = "none";
+                    }
+                // 显示被点击问题的答案
+                answer.style.display = "block";
+            }
+        });
+    }
+});
+</script>

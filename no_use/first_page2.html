@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>style transfer</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        body, html {
+          width: 100%; /* 确保根元素宽度为100% */
+          height: 100%; /* 确保根元素高度为100% */
+          margin: 0; /* 移除默认外边距 */
+          padding: 0;
+          overflow: hidden;
+        }
+        *, *::before, *::after {
+    box-sizing: border-box;
+}
+.logo {
+            width: 50px; /* 设置logo宽度 */
+            height: auto; /* 高度自适应 */
+            margin-right: 10px; /* 调整logo和名称之间的间距 */
+        }
+        .logo-container {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            z-index: 1; /* 确保logo在背景上方 */
+        }
+        .name{
+            position: absolute;
+            top: 40px;
+            left: 90px;
+            z-index: 1; /* 确保logo在背景上方 */
+        }
+        .flex-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        .image-slider {
+            flex: 0 1 61.8%; /* 使用黄金分割比例，占据大部分空间 */
+            background-color: #dbc9c5; /* 淡棕色背景 */
+            background-size: cover; /* 背景图片覆盖整个区域 */
+           /* background-position: center;*/ /* 背景图片居中 */
+            position: relative;
+            z-index: 0;
+        }
+        
+        .center {
+    width: 100%; /* 图片轮播容器宽度 */
+    height: 100%; /* 容器高度，确保充满父元素 */
+    position: absolute; /* 绝对定位 */
+    top: 68%; /* 顶部偏移，根据需要调整 */
+    left: 0;
+    transform: translateY(-50%); /* 垂直居中调整 */
+}
+
+.center img {
+    width: auto; /* 可以设置为auto，或者是100%视情况而定 */
+    height: auto; /* 高度自动，保持图片比例 */
+    max-width: 100%; /* 确保图片不超过容器宽度 */
+    display: block; /* 图片块级显示，消除底部空白 */
+    /* 根据需要调整图片的具体位置，如添加margin */
+}
+        
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between; /* 保证内容分散对齐 */
+            height: 100%;
+        }
+        .login-header {
+            width: 40%; /* 或根据实际情况调整 */
+            text-align: center; /* 如果图片不是全宽，可以居中 */
+            margin-top: 30px; /* 或根据需要调整 */
+        }
+
+        .login-header img {
+            max-width: 80%; /* 保证图片不超出容器宽度 */
+            height: auto; /* 保持图片比例 */
+        }
+        .login h2{
+    flex: 0 1 38.2%; /* 占据剩余空间 */
+    background-color: white; /* 白色背景 */
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    flex-direction: column; /* 使内容垂直排列 */
+    margin-bottom: 10px; /* 添加一些底部外边距 */
+    font-size: 3.5rem; /* 大标题字体大小 */
+    color: #333; /* 标题颜色 */
+    margin-top: 220px;
+}
+.login-button {
+    background-color: #4f312a; /* 按钮背景色 */
+    color: white; /* 文字颜色 */
+    padding: 10px 20px; /* 内边距 */
+    margin: 35px; /* 外边距 */
+    margin-top: 200px; /* 修改此处的数值以调整 Welcome 和按钮之间的垂直距离 */
+    border: none; /* 无边框 */
+    border-radius: 5px; /* 边框圆角 */
+    cursor: pointer; /* 鼠标样式 */
+    font-size: 1.2rem; /* 字体大小 */
+    width: 220px; /* 宽度 */
+}
+
+.login-button:hover {
+    background-color: #37201B; /* 鼠标悬停时按钮背景色 */
+}
+.header {
+            display: flex;
+            align-items: center;
+        }
+.logo {
+            width: 50px; /* 设置logo宽度 */
+            height: auto; /* 高度自适应 */
+            margin-right: 10px; /* 调整logo和名称之间的间距 */
+        }
+
+        .name {
+            width: 140px;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            right: 18%;
+            transform: translateX(50%);
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .footer a {
+            text-decoration: none;
+            color: #333;
+            margin: 0 10px;
+            position: relative;
+        }
+
+        .footer a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 100%;
+            height: 1px;
+            background-color: #333;
+        }
+
+        input.error{
+            border: 2px solid #FF3131;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+        </div>
+        <div class="name-container">
+            <img src="{{ url_for('static', filename='Name.png') }}" alt="Name" class="name">
+        </div>
+    </div>
+    <div class="flex-container">
+    <!-- 图片轮播部分 -->
+    <div class="image-slider" id="mask">
+        <div class="center">
+            <h2 class="title">
+                <img src="" alt="" style="width: 100px; height: auto;">
+            </h2>
+           <img :src="imgArr[index]" alt="Main Image">
+           <!--<a href="javascript:void(0)" v-show="index!=0" @click="prev" class="left">-->
+            
+                <!--<img src="img/left.jpg" alt="Previous">-->
+            </a>
+            <!--<a href="javascript:void(0)" v-show="index<imgArr.length-1" @click="next" class="right">-->
+            
+              <!-- <img src="img/right.jpg" alt="Next">--> 
+            </a>
+            <img src="{{ url_for('static', filename='decaration.png') }}" alt="Decoration" style="position: absolute; bottom: 0.01;">
+        </div>
+    </div>
+    <div class="login-container">
+      <!-- 顶部图片 -->
+      <!--<div class="login-header">
+          <img src="img/right_title.png" alt="Right Title">
+      </div>-->
+    <!-- 登录部分 -->
+    <div class="container">
+        <div class="login">
+            <div id="app">
+              <h2 style="font-family: 'Segoe Script',serif">Welcome</h2>
+              <button class="login-button" onclick="goToLoginPage()">Log in</button>
+              <button class="login-button" onclick="goToSignPage()">Sign up</button>
+            </div>
+        </div>
+        <div class="footer">
+            <a href="/terms_of_use">Terms of Use</a>|<a href="/policy">Privacy Policy</a>
+        </div>
+    </div>
+<script>
+    // 定义点击按钮时的页面跳转函数
+        function goToLoginPage() {
+            // 使用 JavaScript 跳转到登录页面
+            window.location.href = "/login";
+        }
+        function goToSignPage() {
+            window.location.href = "/create"
+        }
+    new Vue({
+        el:"#mask",
+        data:{
+            imgArr: [
+                "{{ url_for('static', filename='1.png') }}",
+                "{{ url_for('static', filename='2.png') }}",
+                "{{ url_for('static', filename='3.png') }}"
+            ],
+            index:0
+        },
+        methods:{
+            /*
+            prev:function(){
+                this.index--;
+            },
+            next:function(){
+                this.index++;
+            },*/
+            autoSlide: function() {
+                if (this.index < this.imgArr.length - 1) {
+                    this.index++;
+                } else {
+                    this.index = 0;
+                }
+            }
+        },
+        mounted: function() {
+            // 设置定时器，每隔一段时间自动切换到下一张图片
+            setInterval(this.autoSlide, 3000); // 每3秒自动切换
+        }
+    });
+
+    new Vue({
+        el: '#app',
+        data: {
+            isUser: true
+        },
+    });
+</script>
+</body>
+</html>

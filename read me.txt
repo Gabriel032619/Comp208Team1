@@ -1,0 +1,6 @@
+win cmd：
+python/python3 first_database.py	(to create the database)
+pip/pip3 install -r requirements.txt	(install all the things of the project)
+python/python3 app.py	(main web python file)
+
+linux?

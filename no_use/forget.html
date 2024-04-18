@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Page</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column; /* Change to column for vertical alignment */
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    margin: 0;
+  }
+  
+  .login-container {
+    background: #fff;
+    padding: 40px; /* Increased padding */
+    border-radius: 10px; /* Larger border radius */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 340px; /* Increased width */
+    margin-top: 120px; /* Added space for the logo */
+  }
+  
+  .login-container h2 {
+    margin: 0;
+    color: #333;
+    margin-bottom: 30px; /* Increased space above the form */
+    font-size: 24px; /* Larger font size */
+  }
+  
+  .login-container input {
+    width: 100%;
+    padding: 15px; /* Larger padding for inputs */
+    margin-bottom: 20px; /* Increased space between inputs */
+    border: 2px solid #ddd; /* Thicker border */
+    border-radius: 30px; /* Larger border radius for inputs */
+    box-sizing: border-box;
+    font-size: 16px; /* Larger font size for inputs */
+  }
+  
+  .login-container button {
+    width: 100%;
+    padding: 15px; /* Larger padding for button */
+    background-color: #4F3129;
+    border: none;
+    border-radius: 30px; /* Larger border radius for button */
+    color: white;
+    cursor: pointer;
+    margin-bottom: 20px; /* Space above the forgot password link */
+    font-size: 18px; /* Larger font size for button */
+  }
+  
+  .login-container a {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px; /* Smaller font size for the link */
+  }
+
+  .login-container label {
+  display: block;
+  margin-bottom: 5px; 
+  font-size: 20px; 
+  color: #333; 
+  text-align: center; 
+}
+
+  
+  .login-container a:hover {
+    text-decoration: underline;
+  }
+  
+  .footer-links {
+    position: fixed; /* Fixed to the bottom */
+    bottom: 30px; /* Position from the bottom */
+    width: 100%;
+    text-align: center;
+  }
+  
+  .footer-links a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 5px;
+    font-size: 14px; /* Smaller font size for footer links */
+  }
+  
+  .footer-links a:hover {
+    text-decoration: underline;
+  }
+  
+  .logo {
+  position: fixed; 
+  top: 15px; 
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  }
+  
+  .logo img {
+    height: 50px; /* Fixed height for logo */
+  }
+
+</style>
+</head>
+<body>
+
+<div class="logo">
+  <!-- Update the src to your actual logo path -->
+  <a href="/">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="logo">
+  </a>
+
+</div>    
+
+<div class="login-container">
+  <h2>Forget password</h2>
+  <form action="/login/forget">
+  <label for="hometown">What is your hometown?</label>
+  <input type="text" id="hometown" name="hometown">
+
+  <label for="name">What is your name?</label>
+  <input type="text" id="name" name="name">
+  <button type="submit">Continue</button>
+</form>
+</div>
+
+<div class="footer-links">
+  <a href="/terms_of_use">terms of use</a> | <a href="/policy">privacy policy</a>
+</div>
+
+</body>
+</html>
+

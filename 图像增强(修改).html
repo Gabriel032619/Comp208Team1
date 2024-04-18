@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Arimo&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Main Page</title>
+<style>
+    body {
+        margin:0;
+        display: flex;
+        font-family: 'Arimo', sans-serif;
+    }
+
+    .left-side-background {
+        position: absolute; /* 使用绝对定位 */
+        top: 0;
+        left: 0;
+        width: 260px;
+        height: 820px;
+        background-color: #dbc9c5;
+        z-index: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+        .logo {
+            width: 40px; /* 调整为合适的大小 */
+        }
+
+        
+        .Name{
+            width: 135px;
+            height:auto;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 100px; 
+            left: 50px;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .name-container{
+            position: absolute;
+            top: 103px;
+            left: 90px;
+            z-index: 1; /* 确保logo在背景上方 */
+        }
+
+        .dashboard-menu {
+            padding-top: 40%;
+            display: flex;
+            flex-direction: column;
+            position: absolute; /* 绝对定位 */
+            top: 100px; /* 适当调整以匹配截图 */
+            width: 100%;
+            align-items: center;
+        }
+
+        .dashboard-item {
+            font-weight: blod;
+            color: white; /* Adjust text color as needed */
+            text-decoration: none;
+            padding: 10px 0; /* Adjust padding as needed */
+            width: 100%;
+            text-align: center;
+            font-size: 1.5em; /* Adjust font size as needed */
+            border-bottom: 1px solid #ffffff30; /* Optional separator */
+            padding-top: 15px; /* 增加顶部外边距 */
+            padding-bottom: 15px; /* 增加底部外边距 */
+        }
+
+        .dashboard-item:hover {
+            background-color: #ffffff20; /* Optional hover effect */
+        }
+
+        .dashboard-item.active {
+            background-color: #b09b96; /* 深棕色背景 */
+            color: #FFFFFF; /* 白色文字 */
+            font-weight: bold; /* 加粗字体 */
+        }
+
+
+        .right-side-background {
+            position: absolute;
+            top: 0;
+            left: 260px;
+            width: 1180px;
+            height: 820px;
+            background-color: #f7f7f7;
+            z-index: 1;
+        }
+
+        .text {
+            position: absolute;
+            top: -70px; /* 根据需要调整 */
+            left: 180px;
+            width: 850px;
+        }
+
+        .blank1 {
+            position: absolute;
+            line-height: 1.5;
+            font-size: large;
+            left: 885px;
+            width: 260px;
+            height: 120px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-bottom: 10px; /* 为方框之间添加间隙 */
+        }
+
+            /* 为每个方框设置不同的top值以使它们垂直排列 */
+            .box1 { top: 200px; }
+            .box3 { top: 350px} /* 在第一个方框的高度基础上增加高度和间隙 */
+
+        .logout-link {
+            position: absolute;
+            width:100px;
+            padding: 10px 0;
+            bottom: 20px;
+            right: 20px;
+            z-index: 5;
+            height: 20px;
+            background-color: #4F312A;
+            color: #FFFFFF; /* 设置字体颜色为白色 */
+            border-radius: 35px; /* 圆角边框，增加按钮的圆润感 */
+            font-weight: bold;
+            font-size: 15px; /* 增大字体大小 */
+            text-decoration: none; /* 移除下划线 */
+            cursor: pointer;
+            text-align: center;
+            line-height: 20px;
+            transition: all 0.3s ease; /* 平滑的过渡效果 */
+        }
+
+        .logout-link:hover {
+            background: linear-gradient(145deg, #b09b96, #b96955); /* 鼠标悬停时改变渐变方向 */
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); /* 悬停时增加阴影的模糊度和扩散范围 */
+            transform: translateY(1px); 
+        }
+
+        .blank2{
+                position:absolute;
+                top:200px;
+                left:420px;
+                width:430px;
+                height: 590px; /* 减去顶部的偏移量 */
+                border-radius: 8px;
+                background-color: white; /* 白色背景 */
+                z-index: 2; /* 确保它显示在右侧背景之上 */
+                padding: 20px;/*元素边框与其内部内容之间的空间*/
+                box-sizing: border-box; /* 保证内边距不影响元素的总宽度和高度 */
+                text-align: center;
+        }
+
+        .lightlogo{
+            width:21%;
+            padding-left: 0;
+            padding-top: 40%;
+        }
+
+        .tap-text {
+        display: inline-block; /* 使元素像块级元素一样显示，但允许设置宽度 */
+        margin-top: 200px; /* 在元素上方添加更多空间 */
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #4F312A;
+        color: #FFFFFF; /* 设置字体颜色为白色 */
+        padding: 12px 25px; /* 文字周围的内边距 */
+        border-radius: 20px; /* 圆角边框，增加按钮的圆润感 */
+        font-weight: bold;
+        font-size: 18px; /* 增大字体大小 */
+        text-decoration: none; /* 移除下划线 */
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 添加细微的阴影，增加层次感 */
+        transition: all 0.3s ease; /* 平滑的过渡效果 */
+        }
+
+        .tap-text:hover {
+            background: linear-gradient(145deg, #b09b96, #b96955); /* 鼠标悬停时改变渐变方向 */
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); /* 悬停时增加阴影的模糊度和扩散范围 */
+            transform: translateY(1px); /* 轻微上移，增加点击反馈 */
+        }
+
+        
+        #newButton {
+            display: block; /* 使按钮像块级元素一样显示 */
+            margin: 20px auto; /* 上下间距为 20px，水平居中 */
+            padding: 10px 20px; /* 文字周围的内边距 */
+            font-size: 16px; /* 字体大小 */
+            color: #4F312A; /* 字体颜色为白色 */
+            background: #FFFFFF; /* 背景颜色 */
+            border: none; /* 无边框 */
+            border-radius: 5px; /* 圆角边框 */
+            cursor: pointer; /* 鼠标悬停时显示指针 */
+            font-weight: bold;
+        }
+
+        .tap-text.disabled {
+            pointer-events: none; /* 禁止鼠标事件 */
+            opacity: 0.5; /* 半透明显示，表示不可用 */
+        }
+
+
+        .blank3{
+            position:absolute;
+            top:200px;
+            left:35px;
+            width: 350px;
+            height:590px;
+            border-radius: 8px;
+            background-color: white; /* 白色背景 */
+            background-size: 100px; 
+            z-index: 2; /* 确保它显示在右侧背景之上 */
+            padding: 20px;/*元素边框与其内部内容之间的空间*/
+            box-sizing: border-box; /* 保证内边距不影响元素的总宽度和高度 */
+        }
+
+        .load{
+            width: 90%;
+            height: auto;
+            margin-top: 100px;
+            padding-left: 30%;
+        }
+
+        /* 改变上传标签的样式 */
+        label {
+            display: block; /* 使标签占据整行 */
+            padding-top: 10px; /* 在标签上方添加一些空间 */
+            font-size: 16px; /* 设置字体大小 */
+            line-height: 1.5; /* 设置行间距 */
+            text-align: center; /* 设置文本居中 */
+            cursor: pointer; /* 鼠标悬停时显示指针，表明这是一个可点击的项目 */
+            color:#4F312A;
+        }
+
+        /* 改变上传输入框的样式 */
+        input[type="file"] {
+            width: 100%; /* 输入框占据整个容器宽度 */
+            margin: 45px 0; /* 在输入框的上下添加一些空间 */
+            padding: 15px; /* 在输入框内部添加一些空间 */
+            padding-left:30%;
+        }
+
+        /* 针对特定的blank3和blank4容器内的标签添加样式 */
+        .blank3 label{
+            font-weight: bold; /* 仅将blank3和blank4内的标签文字加粗 */
+        }
+
+        .dim {
+            filter: brightness(95%); /* 使背景变暗，数值可以根据需要调整 */
+        }
+
+        .finish {
+            display: inline; /* 确保文本是可见的 */
+            font-size: 20px; /* 增大字体大小 */
+            color: #FF0000; /* 设置字体颜色为红色 */
+            font-weight: bold; /* 加粗字体 */
+            font-family: 'Arial', sans-serif; /* 改变字体，这里使用了 Arial */
+            filter: brightness(200%); /* 将亮度调回正常，数值需要根据 .dim 类中的brightness值进行调整 */
+        }
+
+
+</style>
+</head>
+<script>
+    window.onload = function() {
+        document.getElementById("styleImage").addEventListener("change", function() {
+            // 上传风格图后的操作
+            var box1 = document.querySelector(".box1");
+            box1.querySelector(".finish").style.display = "inline"; // 显示 "Finish"
+            box1.classList.add("dim"); // 方框变暗
+        });
+    }
+</script>
+
+<script>
+ document.addEventListener("DOMContentLoaded", function() {
+    var tapText = document.getElementById("tapText");
+    var imageContainer = document.getElementById("imageContainer");
+    var dynamicImage = document.getElementById("dynamicImage");
+    var newButton = document.getElementById("newButton");
+
+    tapText.addEventListener("click", function() {
+        // 设置新图片的路径
+        dynamicImage.src = "img/example.png"; // 替换为新图片的路径
+        dynamicImage.alt = "New Image";
+        // 显示图片
+        imageContainer.style.display = "block";
+        // 显示新按钮
+        newButton.style.display = "block";
+    });
+});
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    var styleInput = document.getElementById("styleImage");
+    var stylePreview = document.getElementById("stylePreview");
+    var contentInput = document.getElementById("contentImage");
+    var contentPreview = document.getElementById("contentPreview");
+
+    styleInput.addEventListener("change", function(event) {
+        var file = event.target.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                stylePreview.src = e.target.result;
+                stylePreview.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    contentInput.addEventListener("change", function(event) {
+        var file = event.target.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                contentPreview.src = e.target.result;
+                contentPreview.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});
+
+</script>
+
+<script>
+   // 初始化变量来跟踪图片是否上传
+var styleImageUploaded = false;
+
+document.addEventListener("DOMContentLoaded", function() {
+    var tapText = document.getElementById("tapText");
+    var imageContainer = document.getElementById("imageContainer");
+    var dynamicImage = document.getElementById("dynamicImage");
+    var newButton = document.getElementById("newButton");
+
+    // 当风格图片上传时更新状态
+    document.getElementById("styleImage").addEventListener("change", function() {
+        if (this.files.length > 0) {
+            styleImageUploaded = true;
+            checkBothImagesUploaded();
+        }
+    });
+
+    // 检查图片是否上传了
+    function checkBothImagesUploaded() {
+        if (styleImageUploaded) {
+            // 使 "Click here" 按钮可点击
+            tapText.classList.remove("disabled");
+        }
+    }
+
+    tapText.addEventListener("click", function() {
+        if (!tapText.classList.contains("disabled")) {
+            // 设置新图片的路径
+            dynamicImage.src = "img/example.png"; // 替换为新图片的路径
+            dynamicImage.alt = "New Image";
+            // 显示图片
+            imageContainer.style.display = "block";
+            // 显示新按钮
+            newButton.style.display = "block";
+
+             // 禁用按钮
+             tapText.classList.add("disabled");
+
+            // 设置一个10秒的定时器，在定时器结束后重新启用按钮
+            setTimeout(function() {
+                tapText.classList.remove("disabled");
+            }, 10000); // 10000毫秒 = 10秒
+        }
+    });
+});
+
+</script>
+
+<body>
+    <div class="left-side-background">
+        <div class="logo-container">
+            <img src="img/logo.png" alt="Logo" class="logo">
+        </div>
+        <div class="name-container">
+            <img src="img/Name.png" alt="Name" class="Name">
+        </div>
+        <div class="dashboard-menu">
+            <a href="dashboard.html" class="dashboard-item">Dashboard</a>
+            <a href="风格迁移.html" class="dashboard-item">Style Transfer</a>
+            <a href="图像增强.html" class="dashboard-item active">Image Enhancement</a>
+        </div>
+    </div>
+
+    <div class="right-side-background">
+        <div class="blank1 box1">
+            <strong>Step 1: </strong>upload the image you want to improve
+            <span class="finish" style="display: none;">Finish</span>
+        </div>
+        <div class="blank1 box3">
+            <strong>Step 2: </strong>Done !
+        </div>
+        <div class="blank2">
+            <div id="imageContainer" style="display: none; text-align: center;">
+                <img id="dynamicImage" src="" alt="Dynamic Image" style="position: absolute; top: 40%; left: 50%; max-width: 80%; height: auto; transform: translate(-50%, -50%);box-shadow: 0 5px 10px rgba(0, 0, 0, 2);"/>
+            </div>
+            <img src="img/lightlogo.png" alt="Lightlogo" class="lightlogo">
+            <a id="tapText" class="tap-text disabled">Click here to improve your picture!</a>
+            <a href="图像增强.html" id="newButton" class="button-style" style="display: none;">Try it again!</a>
+        </div>
+
+        <div class="blank3">
+            <img src="img/load.png" alt="Load" class="load" id="stylePreview" style=" width: auto; height: auto; max-width: 40%; max-height: 50%; padding-top: 49px; padding-left: 30%;"/>
+            <input type="file" id="styleImage"/><label for="styleImage">Upload your style image</label>
+        </div>
+
+    <div class="logout-button">
+        <a id="Logout" class="logout-link" href="first page.html">Log out</a>
+    </div>
+    </div>
+    
+</body>
+</html>

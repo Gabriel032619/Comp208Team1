@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Use</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5;
+    line-height: 1.6;
+  }
+
+
+  .container {
+    width: 80%;
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .container .logo {
+  display: block;
+  height: 60px; /* Adjust the size as needed */
+}
+
+  h1 {
+    font-size: 60px;
+    
+    margin-bottom: 10px;
+  }
+
+  .date-line, .effective-date {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+  }
+
+  .content {
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+  }
+  .content h2 {
+    font-size: 20px;
+    color: #333;
+  }
+
+  .content p {
+    color: #333;
+    margin-bottom: 15px;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      width: 95%;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="/">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Company Logo" class="logo">
+  </a>
+
+  <h1>Terms of Use</h1>
+  <div class="date-line">Updated February 14, 2024</div>
+  <div class="content">
+    <p>Welcome to our website. This website is the result of a project for the COMP208 Group 1 computer science course at the University of Liverpool in the UK, focusing on generating images using style transfer technology. Please read the following usage policy carefully to ensure that you understand and comply with our regulations.</p >
+    
+    <h2>1. Data Collection and Use</h2>
+    <p>All data we collect, including but not limited to uploaded images and user information, is only used for completing academic assignments. The collected data will not be used for any commercial purposes. We promise not to disclose your data to third parties unless required to do so by law.</p >
+    
+    <h2>2. User Responsibilities</h2>
+    <p>Users must not upload any illegal, obscene, infringing, or other inappropriate content. Users bear all responsibility for the copyrights and related liabilities of their uploaded content. Users must ensure that the content they upload does not infringe on the intellectual property or privacy rights of others.</p >
+    
+    <h2>3. Copyright and Intellectual Property</h2>
+    <p>Images generated on this website may be subject to copyright protection and belong to the copyright owner of the original content. Users should respect all involved intellectual property rights.</p >
+    
+    <h2>4. Disclaimer</h2>
+    <p>We assume no responsibility for the accuracy or legality of the user-uploaded content. We are not responsible for any form of loss or damage that may arise from the use of this website.</p >
+    
+    <h2>5. Changes and Termination</h2>
+    <p>We reserve the right to change this policy at any time. If a user fails to comply with these terms, we have the right to suspend or terminate their access to the website.</p >
+    
+    <h2>6. Contact Us</h2>
+    <p>If you have any questions or concerns about this policy, please contact us at [your contact information].</p >
+    
+    <p>By using this website, you indicate that you have read, understood, and agree to comply with these terms and conditions.</p >
+  </div>
+</div>
+
+</body>
+</html>
