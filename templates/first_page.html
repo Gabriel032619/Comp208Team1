@@ -5,14 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>style transfer</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src=https://cdn.jsdelivr.net/npm/vue/dist/vue.js></script>
     <style>
-        body,html {
-    display: flex; /* 使用Flex布局 */
-    flex-direction: row; /* 子元素沿水平方向排列 */
-    min-height: 100vh; /* 确保至少与视口一样高 */
-    margin: 0; /* 移除默认的margin */
+  body {
+    display: flex;
+    flex-direction: column; /* 将内容堆叠，适应不同屏幕 */
+    /*min-height: 100vh; /* 使body至少和视口一样高 */
+    min-height: 900px;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
 }
+
+
+
+/*.box{
+    max-width: 100%;
+    height: 50px;
+}*/
 /*左上角logo和name的位置*/
         .header {
             display: flex;
@@ -21,36 +31,38 @@
         .logo {
             width: 50px; /* 设置logo宽度 */
             height: auto; /* 高度自适应 */
-            margin-right: 5px; /* 调整logo和名称之间的间距 */
+            margin-left: 5px; /* 调整logo和名称之间的间距 */
             width: 40px; /* 设置logo宽度 */
         }
         .logo-container {
+            display: flex; /* 启用Flexbox布局 */
             position: absolute;
-            top: 20px;
-            left: 20px;
+            margin-top: 40px;
+            margin-left: 5px;
             z-index: 1; /* 确保logo在背景上方 */
         }
         .name{
             position: absolute;
-            top: 25px;
-            left: 70px;
+            top: 5px;
+            left: 55px;
             z-index: 1; /* 确保logo在背景上方 */
             width: 140px; /* 设置logo宽度 */
         }
 /*轮播图片*/
 .carousel-container {
             width: 61.8%; /* Left side width as 61.8% of the screen */
-            height: 100vh;
-            position: fixed;
+            height: 130vh;
+            position: relative;
             left: 0;
             top: 0;
             overflow: visible; /* Prevent images from overflowing the screen */
             display: flex;
-            align-items: center; /* Align images vertically center */
-            justify-content: center; /* Center the images horizontally */
+           align-items: center; /* Align images vertically center */
+           justify-content: center; /* Center the images horizontally */
             background-color: #dbc9c5; /* Your desired background color */
         }
-        .carousel-image {
+ 
+.carousel-image {
             max-width: 80%; /* Adjust this value to change the image size */
             max-height: 80vh; /* Adjust the image height if necessary */
             position: absolute;
@@ -84,21 +96,21 @@
 .carousel-caption {
             /* Styles for the caption text */
             position: absolute; /* Position the caption at the bottom of the slide */
-            bottom:20px; /* Distance from the bottom */
+            top:750px; /* Distance from the top */
             left: 50%;
             transform: translateX(-50%); /* Center the caption */
            /* background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
             color: black; /* Text color */
             padding: 1em; /* Padding around the text */
-            text-align: center; /* Center the text */
+           /* text-align: center; /* Center the text */
             visibility: hidden; /* Initially hide the caption */
             opacity: 0; /* Make the caption fully transparent */
             transition: visibility 0s, opacity 0.5s linear; /* Animate the opacity */
             width: 80%; /* Width of the caption */
             box-sizing: border-box; /* Include padding in the width */
-            font-size:1.2em;
+            font-size:1.5vw;
         }
-
+ 
         .carousel-caption.active {
             visibility: visible; /* Make the caption visible */
             opacity: 1; /* Make the caption fully opaque */
@@ -108,26 +120,29 @@
     color: black; /* Subtitle text color */
     margin: 0; /* Adjust margin as needed */
     position: absolute;
-    top: -80px; /* 距容器顶部20px */
-    right: 205px; /* 距容器右侧20px */
-    font-size: 3em;
+    top: -65px; /* 距容器顶部20px */
+    left: 200px; /* 距容器zuo侧20px */
+    font-size: 4vw;
     color: black;
     margin: 0;
 }
-
+ 
 /*右边的标题*/
-
+ 
 /*登陆按钮*/
 .container {
+    display: flex;
+    justify-content:center;
+    align-items: center;
     position: relative; /* 创建定位上下文 */
 }
 h2 {
-    position: absolute;
+    position: relative;
     top: -170px;
-    right: -860px;
+    left: 930px;
     transform: translateY(-50%); /* 向上移动50%的自身高度，以确保垂直居中 */
     font-size: 4rem; /* 字体大小 */
-
+ 
 }
 .login1-button {
     background-color: #4f312a; /* 按钮背景色 */
@@ -141,15 +156,16 @@ h2 {
     font-size: 1.2rem; /* 字体大小 */
     width: 220px; /* 宽度 */
     position: absolute;
-    top: 50%; /* 调整垂直位置 */
-    right: -1000px; /* 距离右边框的距离 */
-
+    top: 55%; /* 调整垂直位置 */
+    left: 1100px; /* 距离右边框的距离 */
+    transform: translateY(-50%);
+ 
 }
-
+   
 .login1-button:hover {
     background-color: #37201B; /* 鼠标悬停时按钮背景色 */
 }
-
+ 
 .login2-button {
     background-color: #4f312a; /* 按钮背景色 */
     color: white; /* 文字颜色 */
@@ -162,31 +178,33 @@ h2 {
     font-size: 1.2rem; /* 字体大小 */
     width: 220px; /* 宽度 */
     position: absolute;
-    top: 50%; /* 调整垂直位置 */
-    right: -750px; /* 距离右边框的距离 */
-
+    top: 55%; /* 调整垂直位置 */
+    left: 800px; /* 距离右边框的距离 */
+    transform: translateY(-50%);
+ 
 }
-
+ 
 .login2-button:hover {
     background-color: #37201B; /* 鼠标悬停时按钮背景色 */
 }
 /*右下角的条款*/
 .footer {
-            position: fixed;
-            bottom: 20px;
-            right: 18%;
-            transform: translateX(50%);
+            position: absolute;
+            top: 550px;
+            left: 440%;
+            transform: translateX(-50%);
             text-align: center;
             font-size: 14px;
+            width:300px;
         }
-
+ 
         .footer a {
             text-decoration: none;
             color: #333;
-            margin: 0 10px;
+            margin: 10 130px;
             position: relative;
         }
-
+ 
         .footer a::after {
             content: "";
             position: absolute;
@@ -196,12 +214,51 @@ h2 {
             height: 1px;
             background-color: #333;
         }
+ 
 
+@media (min-width: 1440px) {
+    .carousel-container {
+        width: 61.8%; /* 或者任何适合的宽度 */
+    }
+    .carousel-image {
+        max-width: 70%; /* 调整图片大小 */
+        max-height: 60vh; /* 调整图片高度 */
+    }
+    .carousel-caption {
+        top: 800px; /* 调整文字位置 */
+        font-size: 1.2vw; /* 调整字体大小 */
+    }
+    .login1-button {
+        left: 380%; /* 调整按钮的位置 */
+        transform: translateX(50%); /* 水平居中 */
+        
+    }
+    .login2-button {
+        left: 260%; /* 调整按钮的位置 */
+        transform: translateX(50%); /* 水平居中 */
+        
+    }
+}
+@media (min-width: 1440px) {
+    h2 {
+        left: 450%;
+        transform: translate(-50%, -50%);
+        font-size: 3rem; /* 缩小标题字体 */
+    }
+    .footer {
+        top: 500px; /* 调整页脚位置 */
+        left: 450%;
+        transform: translateX(-50%);
+        width: 100%; /* 页脚宽度调整为100% */
+    }
+}
 
     </style>
 </head>
 <body>
+   
     <!--左上角logo-->
+    <div class="CT">
     <div class="header">
         <div class="logo-container">
             <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
@@ -219,7 +276,7 @@ h2 {
         </div>
         <img src="{{ url_for('static', filename='2.png') }}" class="carousel-image" alt="Image 2">
         <div class="carousel-caption active">
-            <h3 class="carousel-subtitle">Improve Image</h3>
+            <h3 class="carousel-subtitle">Image Enhancement</h3>
             <p>Image enhancement is a critical process in the field of digital imaging, aiming to improve the visual appearance of an image or to convert the image to a form better suited for analysis by humans or machine algorithms.</p>
         </div>
         <!--
@@ -228,8 +285,8 @@ h2 {
             <h3 class="carousel-subtitle">Classification</h3>
             <p>Classification in the context of machine learning and data science is a fundamental process that involves categorizing data into predefined classes or groups.</p>
         </div>-->
- <!--右边的登陆界面-->
- <div class="container">
+<!--右边的登陆界面-->
+<div class="container">
     <div class="login">
         <div id="app">
             <h2>Welcome</h2>
@@ -239,20 +296,21 @@ h2 {
             <a href="/create">
                 <button class="login2-button" onclick="goToSignPage()">Sign up</button>
             </a>
-
+                
         </div>
     </div>
     <div class="footer">
         <a href="/terms_of_use">Terms of Use</a>|<a href="/policy">Privacy Policy</a>
     </div>
-</div>  
+</div>
+</div>
  
 <script>
    let currentImageIndex = 0;
     const images = document.querySelectorAll('.carousel-image');
     const captions = document.querySelectorAll('.carousel-caption');
     const totalImages = images.length;
-
+ 
     function updateCarousel() {
         images.forEach((img, index) => {
             img.classList.remove('active');
@@ -260,18 +318,42 @@ h2 {
         captions.forEach((caption, index) => {
             caption.classList.remove('active');
         });
-
+ 
         images[currentImageIndex].classList.add('active');
         captions[currentImageIndex].classList.add('active');
     }
-
+ 
     setInterval(() => {
         currentImageIndex = (currentImageIndex + 1) % totalImages;
         updateCarousel();
     }, 4000); // Change image every 4 seconds
-
+ 
     updateCarousel(); // Initial call to set the classes correctly
+ 
+    let zoomLevel =1 ;
+    window.addEventListener('resize',function(){
+        const newZoomLevel = window.outerWidth / window.innerWidth;
+        console.log ('Current Zoom Level:', newZoomLevel);
+ 
+        if(newZoomLevel >= 0.9 && newZoomLevel <0.95){
+            document.querySelector('.carousel-container').style.width = '55.62%';
+            document.querySelectorAll('.carousel-caption').forEach(function(caption) {
+                caption.style.top = '850px';
+            });
+           
+           
+ 
+        }else{
+            document.querySelector('.carousel-container').style.width = '61.8%';
+            document.querySelector('.carousel-caption').forEach(function(caption) {
+                caption.style.top = '750px';
+           
+    });
+}
+});
     </script>
     </body>
 </html>
-    
+ 
+
+ 
